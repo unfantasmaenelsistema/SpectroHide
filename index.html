@@ -358,7 +358,7 @@
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">Abre el WAV en Audacity</div>
-        <div class="step-desc">Archivo → Abrir… y selecciona el <code>ctf_hidden_*.wav</code> descargado con SpectroHide (o el audio del reto).</div>
+        <div class="step-desc">Archivo → Abrir… y selecciona el <code>spectrohide_*.wav</code> descargado con SpectroHide (o el audio del reto).</div>
       </div>
     </div>
 
@@ -833,7 +833,9 @@ function encodeWav(data,sr){
 function downloadAudio(){
   if(!genUrl)return;
   const a=document.createElement('a');a.href=genUrl;
-  a.download='ctf_hidden_'+(genBuffer.text.replace(/[^a-z0-9]+/gi,'_').replace(/^_|_$/g,'')||'audio')+'.wav';
+  // El nombre NO lleva el texto escondido: si se repartiera el archivo sin renombrar, el nombre daría la solución.
+  const d=new Date(),z=n=>String(n).padStart(2,'0');
+  a.download='spectrohide_'+d.getFullYear()+z(d.getMonth()+1)+z(d.getDate())+'-'+z(d.getHours())+z(d.getMinutes())+z(d.getSeconds())+'.wav';
   document.body.appendChild(a);a.click();a.remove();
 }
 
